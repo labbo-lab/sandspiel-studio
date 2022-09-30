@@ -70,14 +70,14 @@ const UploadButtons = () => {
 
   let upload = async (postPublic = false) => {
     if (
-      sharedState === " saving..." ||
-      sharedState === " posting..." ||
-      sharedState === " ✓ posted" ||
-      sharedState === " ✓ saved"
+      sharedState === " Saving..." ||
+      sharedState === " Posting..." ||
+      sharedState === " ✓ Posted" ||
+      sharedState === " ✓ Saved"
     ) {
       return;
     }
-    setSharedState(" preparing...");
+    setSharedState(" Preparing...");
     if (!session) {
       setSharedState("Please sign in to save & post :)");
       window.setTimeout(() => {
@@ -104,7 +104,7 @@ const UploadButtons = () => {
 
     useStore.setState({ initialSandsData: new Uint8Array(sands) });
 
-    setSharedState(postPublic ? " posting..." : " saving...");
+    setSharedState(postPublic ? " Posting..." : " Saving...");
 
     fetch("/api/upload", {
       method: "post",
@@ -185,7 +185,7 @@ const UploadButtons = () => {
           ];
           navigator.clipboard.write(data).then(
             function () {
-              setSharedState(postPublic ? " ✓ posted" : " ✓ saved");
+              setSharedState(postPublic ? " ✓ Posted" : " ✓ Saved");
               router.push({
                 pathname: `/post/${post.id}`,
                 query: persistingQuery,
@@ -201,13 +201,13 @@ const UploadButtons = () => {
             },
             function (e) {
               console.error(e);
-              setSharedState("... error");
+              setSharedState("... Error");
             }
           );
         } catch (e) {
           // Avoided a crash in Firefox
           // TODO: fix this
-          setSharedState(postPublic ? " ✓ posted" : " ✓ saved");
+          setSharedState(postPublic ? " ✓ Posted" : " ✓ Saved");
           router.push({
             pathname: `/post/${post.id}`,
             query: persistingQuery,
@@ -232,7 +232,7 @@ const UploadButtons = () => {
     <>
       <input
         type="text"
-        placeholder={post ? "reply title..." : "post title..."}
+        placeholder={post ? "Reply Title..." : "Post Title..."}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
